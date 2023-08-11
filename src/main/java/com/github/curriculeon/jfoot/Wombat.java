@@ -12,7 +12,10 @@ import static com.github.curriculeon.jfoot.Direction.*;
  * @version 2.0
  */
 public class Wombat extends Herbivore {
+    private int moveCount = 0;
+
     public Wombat() {
+
         setImage("wombat.png");
     }
 
@@ -21,10 +24,29 @@ public class Wombat extends Herbivore {
             this.eatLeaf();
         } else if (this.canMove()) {
             this.move();
+
         } else {
-            this.turnLeft();
+            int wPosition = this.getX();
+            int sPosition = this.getY();
+            if (wPosition == 0 && sPosition == 0) {
+                this.turnLeft();
+                this.move(10);
+//                this.setDirection(EAST);
+                this.turnLeft();
+            } else if (this.getDirection() == WEST) {
+                this.turnRight();
+                this.move();
+                this.turnRight();
+            } else if (this.getDirection() == EAST) {
+                this.turnLeft();
+                this.move();
+                this.turnLeft();
+            }
         }
     }
+
+
+
 
     public void turnLeft() {
         if (this.getDirection() == EAST) {
@@ -36,5 +58,12 @@ public class Wombat extends Herbivore {
         } else {
             this.setDirection(EAST);
         }
+    }
+
+
+    public void turnRight() {
+        turnLeft();
+        turnLeft();
+        turnLeft();
     }
 }
